@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kas Kelas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- ================= LOGIN ================= -->
+<div id="login" class="min-h-screen flex items-center justify-center">
+  <div class="bg-white p-6 rounded shadow w-80">
+    <h2 class="text-xl font-bold mb-4 text-center">Login Kas Kelas</h2>
+
+    <input id="username" class="border p-2 w-full mb-2" placeholder="Username">
+    <input id="password" type="password" class="border p-2 w-full mb-2" placeholder="Password">
+
+    <select id="role" class="border p-2 w-full mb-4">
+      <option value="student">Murid</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <button onclick="login()" class="bg-blue-600 text-white w-full py-2 rounded">
+      Login
+    </button>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" class="hidden p-6 max-w-6xl mx-auto">
+
+  <!-- HEADER -->
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold">📘 Kas Kelas</h1>
+    <button onclick="logout()" class="text-red-600">Logout</button>
+  </div>
+
+  <!-- TOTAL -->
+  <div class="grid md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white p-4 rounded shadow">
+      <p>Total Masuk</p>
+      <b id="totalMasuk">Rp 0</b>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+      <p>Total Keluar</p>
+      <b id="totalKeluar">Rp 0</b>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+      <p>Total Saldo</p>
+      <b id="totalSaldo">Rp 0</b>
+    </div>
+  </div>
+
+  <!-- ================= ADMIN PANEL ================= -->
+  <div id="adminPanel" class="hidden bg-white p-4 rounded shadow mb-6">
+    <h2 class="font-bold mb-2">Tambah Transaksi</h2>
+
+    <select id="jenis" onchange="onJenisChange()" class="border p-2 w-full mb-2">
+      <option value="in">Kas Masuk (Per Siswa)</option>
+      <option value="out">Kas Keluar (Umum)</option>
+    </select>
+
+    <select id="siswa" class="border p-2 w-full mb-2"></select>
+
+    <input id="ket" class="border p-2 w-full mb-2" placeholder="Keterangan">
+
+    <input id="jumlah" class="border p-2 w-full mb-2" placeholder="Jumlah (Rp)">
+
+    <button onclick="tambah()" class="bg-green-600 text-white w-full py-2 rounded">
+      Simpan
+    </button>
+  </div>
+
+  <!-- ================= SISWA ================= -->
+  <div class="bg-white p-4 rounded shadow mb-6">
+    <h2 class="font-bold mb-2">Saldo Per Siswa</h2>
+    <ul id="listSiswa"></ul>
+  </div>
+
+  <!-- ================= RIWAYAT ================= -->
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="font-bold mb-2">Riwayat Transaksi</h2>
+
+    <div class="overflow-x-auto">
+      <table class="w-full border text-sm">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="border p-2">Tanggal</th>
+            <th class="border p-2">Nama</th>
+            <th class="border p-2">Keterangan</th>
+            <th class="border p-2">Jumlah</th>
+            <th class="border p-2">Jenis</th>
+            <th class="border p-2">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="riwayat"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= NOTIF ================= -->
+<div id="notif"
+     class="hidden fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded shadow">
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
+
+<script>
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyABMmYrJUmKtrajsCcyXssXsZVmTSOs_pQ",
+    authDomain: "tekajekas1.firebaseapp.com",
+    projectId: "tekajekas1",
+    storageBucket: "tekajekas1.firebasestorage.app",
+    messagingSenderId: "1019793765022",
+    appId: "1:1019793765022:web:700f06f87e805796b5018f"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Initialize services
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+</script>
+
+<!-- Script utama -->
+<script src="script.js"></script>
+
+
+</body>
+</html>
